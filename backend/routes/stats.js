@@ -72,11 +72,11 @@ router.get("/overview", auth, async function (req, res) {
         totalReminders: totalReminders,
         pendingReminders: pending,
         completedReminders: completed,
-        myPosts: myPosts
-      },
-      speciesCount: speciesCount,
-      lightLevelStats: lightLevelStats,
-      locationStats: locationStats
+        myPosts: myPosts,
+        speciesDistribution: speciesCount,
+        lightLevelDistribution: lightLevelStats,
+        locationDistribution: locationStats
+      }
     });
   } catch (e) {
     res.status(500).json({ message: "Server Error" });
