@@ -1,5 +1,6 @@
 const express = require('express');
 const Reminder = require('../models/Reminder');
+const Plant = require('../models/Plant');
 const auth = require('../middleware/auth');
 
 const router = express.Router();
@@ -137,17 +138,23 @@ router.put('/:id/complete', auth, async (req, res) => {
     reminder.completedAt = new Date();
 
     if (reminder.repeatDays && reminder.repeatDays > 0) {
-      const nextReminder = new Reminder({
-        userId: reminder.userId,
-        plantId: reminder.plantId,
-        type: reminder.type,
-        title: reminder.title,
-        description: reminder.description,
-        dueDate: new Date(reminder.dueDate.getTime() + reminder.repeatDays * 24 * 60 * 60 * 1000),
-        repeatDays: reminder.repeatDays,
-        priority: reminder.priority
-      });
-      await nextReminder.save();
+      const plant = reminder.plantId
+        ? await Plant.findOne({ _id: reminder.plantId, userId: req.userId })
+        : null;
+
+      if (!plant || plant.status !== '死亡') {
+        const nextReminder = new Reminder({
+          userId: reminder.userId,
+          plantId: reminder.plantId,
+          type: reminder.type,
+          title: reminder.title,
+          description: reminder.description,
+          dueDate: new Date(reminder.dueDate.getTime() + reminder.repeatDays * 24 * 60 * 60 * 1000),
+          repeatDays: reminder.repeatDays,
+          priority: reminder.priority
+        });
+        await nextReminder.save();
+      }
     }
 
     await reminder.save();

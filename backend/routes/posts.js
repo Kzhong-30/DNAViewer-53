@@ -3,6 +3,8 @@ const Post = require('../models/Post');
 const auth = require('../middleware/auth');
 
 const router = express.Router();
+const likeRateLimit = new Map();
+const commentRateLimit = new Map();
 
 router.get('/', auth, async (req, res) => {
   try {
@@ -131,24 +133,41 @@ router.delete('/:id', auth, async (req, res) => {
 
 router.post('/:id/like', auth, async (req, res) => {
   try {
+    const rateLimitKey = `${req.userId}:${req.params.id}`;
+    const now = Date.now();
+    const lastLikeTime = likeRateLimit.get(rateLimitKey);
+
     const post = await Post.findById(req.params.id);
 
     if (!post) {
       return res.status(404).json({ message: '帖子不存在' });
     }
 
+    if (lastLikeTime && now - lastLikeTime < 3000) {
+      const liked = post.likes.indexOf(req.userId) !== -1;
+      const message = liked ? '已点赞' : '已取消点赞';
+      return res.json({ post, liked, message });
+    }
+
     const likeIndex = post.likes.indexOf(req.userId);
+    let message;
 
     if (likeIndex === -1) {
       post.likes.push(req.userId);
+      message = '已点赞';
     } else {
       post.likes.splice(likeIndex, 1);
+      message = '已取消点赞';
     }
+
+    likeRateLimit.set(rateLimitKey, now);
 
     await post.save();
     await post.populate('userId', 'username avatar');
 
-    res.json({ post });
+    const liked = post.likes.indexOf(req.userId) !== -1;
+
+    res.json({ post, liked, message });
   } catch (error) {
     console.error('点赞帖子错误:', error);
     res.status(500).json({ message: '服务器错误' });
@@ -163,16 +182,42 @@ router.post('/:id/comments', auth, async (req, res) => {
       return res.status(400).json({ message: '评论内容不能为空' });
     }
 
+    if (content.length > 2000) {
+      return res.status(400).json({ message: '评论内容不能超过2000字符' });
+    }
+
+    const rateLimitKey = `${req.userId}:${req.params.id}:comment`;
+    const now = Date.now();
+    const lastComment = commentRateLimit.get(rateLimitKey);
+
+    if (lastComment && now - lastComment.time < 5000 && lastComment.content === content.trim()) {
+      return res.status(400).json({ message: '请勿重复提交评论' });
+    }
+
     const post = await Post.findById(req.params.id);
 
     if (!post) {
       return res.status(404).json({ message: '帖子不存在' });
     }
 
+    const trimmedContent = content.trim();
+    const tenSecondsAgo = new Date(now - 10000);
+    const duplicateComment = post.comments.find(function(c) {
+      return c.userId.toString() === req.userId &&
+             c.content === trimmedContent &&
+             new Date(c.createdAt) >= tenSecondsAgo;
+    });
+
+    if (duplicateComment) {
+      return res.status(400).json({ message: '请勿重复提交评论' });
+    }
+
     post.comments.push({
       userId: req.userId,
-      content: content.trim()
+      content: trimmedContent
     });
+
+    commentRateLimit.set(rateLimitKey, { time: now, content: trimmedContent });
 
     await post.save();
     await post.populate('userId', 'username avatar');

@@ -1,6 +1,7 @@
 const express = require('express');
 const Plant = require('../models/Plant');
 const Reminder = require('../models/Reminder');
+const Diary = require('../models/Diary');
 const auth = require('../middleware/auth');
 
 const router = express.Router();
@@ -187,6 +188,46 @@ router.get('/:id/reminders', auth, async (req, res) => {
     res.json({ reminders });
   } catch (error) {
     console.error('获取植物提醒错误:', error);
+    res.status(500).json({ message: '服务器错误' });
+  }
+});
+
+router.get('/:id/diaries', auth, async (req, res) => {
+  try {
+    const plant = await Plant.findOne({ _id: req.params.id, userId: req.userId });
+
+    if (!plant) {
+      return res.status(404).json({ message: '植物不存在' });
+    }
+
+    let page = parseInt(req.query.page);
+    let limit = parseInt(req.query.limit);
+
+    if (isNaN(page) || page < 1) page = 1;
+    if (page > 100) page = 100;
+
+    if (isNaN(limit) || limit < 1) limit = 10;
+    if (limit > 50) limit = 50;
+
+    const skip = (page - 1) * limit;
+
+    const diaries = await Diary.find({
+      plantId: req.params.id,
+      userId: req.userId
+    })
+      .populate('plantId', 'name species images')
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await Diary.countDocuments({
+      plantId: req.params.id,
+      userId: req.userId
+    });
+
+    res.json({ diaries, total, page, limit });
+  } catch (error) {
+    console.error('获取植物日记错误:', error);
     res.status(500).json({ message: '服务器错误' });
   }
 });

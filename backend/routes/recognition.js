@@ -21,6 +21,7 @@ const mockPlantDatabase = [
       lighting: '喜散射光，避免阳光直射，耐阴性强。',
       fertilizing: '生长季节每月施一次稀薄液肥。',
       pruning: '定期修剪过长的藤蔓，促进分枝。',
+      repotting: '每1-2年春季换盆一次，选用疏松肥沃的腐殖土。',
       propagation: '扦插繁殖，剪取健康茎段插入水中或土中即可生根。',
       pests: '注意防治红蜘蛛和介壳虫。'
     },
@@ -48,6 +49,7 @@ const mockPlantDatabase = [
       lighting: '喜充足阳光，光照不足会导致徒长。',
       fertilizing: '生长季节每月施一次稀薄多肉专用肥。',
       pruning: '可适当摘除底部老叶，保持株型美观。',
+      repotting: '每2-3年春季换盆一次，使用颗粒土与泥炭土混合基质。',
       propagation: '叶插或砍头繁殖，叶片平放在土表即可生根。',
       pests: '注意防治介壳虫和根粉蚧。'
     },
@@ -75,6 +77,7 @@ const mockPlantDatabase = [
       lighting: '喜明亮光线，耐阴性较强，避免强光直射。',
       fertilizing: '生长季节每月施一次复合肥。',
       pruning: '可修剪造型，促进侧枝生长。',
+      repotting: '每2-3年春季换盆一次，换盆时可修剪老根。',
       propagation: '扦插繁殖，春季剪取健康枝条扦插。',
       pests: '注意防治红蜘蛛和蚜虫。'
     },
@@ -102,6 +105,7 @@ const mockPlantDatabase = [
       lighting: '喜明亮散射光，避免强光直射。',
       fertilizing: '生长季节每两周施一次稀薄液肥。',
       pruning: '及时剪除枯叶和花茎，促进新叶生长。',
+      repotting: '每1-2年春季换盆一次，分株繁殖可同时进行。',
       propagation: '分株或剪取匍匐茎上的小植株栽植。',
       pests: '注意防治蚜虫和红蜘蛛。'
     },
@@ -129,6 +133,7 @@ const mockPlantDatabase = [
       lighting: '喜充足阳光，每天至少6小时光照。',
       fertilizing: '花期前增加磷钾肥，花后追施复合肥。',
       pruning: '花后及时修剪残花，冬季重剪整形。',
+      repotting: '每1-2年早春萌芽前换盆一次，选用肥沃疏松的园土。',
       propagation: '扦插或嫁接繁殖，春秋季扦插成活率高。',
       pests: '注意防治白粉病、黑斑病和蚜虫。'
     },
@@ -156,6 +161,7 @@ const mockPlantDatabase = [
       lighting: '喜明亮散射光，避免强光直射。',
       fertilizing: '生长季节每月施一次稀薄液肥，花前增施磷钾肥。',
       pruning: '及时摘除黄叶和残花。',
+      repotting: '每2年春季花后换盆一次，选用腐叶土与松针土混合基质。',
       propagation: '分株繁殖，春季换盆时进行。',
       pests: '注意防治根腐病和介壳虫。'
     },
@@ -183,6 +189,7 @@ const mockPlantDatabase = [
       lighting: '喜充足阳光，光照越足生长越好。',
       fertilizing: '生长季节每月施一次稀薄仙人掌专用肥。',
       pruning: '一般不需修剪，可摘除老弱茎片。',
+      repotting: '每2-3年春季换盆一次，使用排水良好的沙质土。',
       propagation: '扦插繁殖，切取健康茎片晾干伤口后插入土中。',
       pests: '注意防治红蜘蛛和介壳虫。'
     },
@@ -210,6 +217,7 @@ const mockPlantDatabase = [
       lighting: '喜充足光照，也耐半阴。',
       fertilizing: '生长季节每月施一次氮肥为主的肥料。',
       pruning: '经常采摘嫩梢，促进分枝，防止开花。',
+      repotting: '每年春季换盆一次，可结合分株繁殖进行。',
       propagation: '分株或扦插繁殖，极易成活。',
       pests: '注意防治蚜虫和白粉病。'
     },
@@ -242,17 +250,29 @@ router.post('/identify', auth, async (req, res) => {
       .map(plant => ({
         name: plant.name,
         confidence: Math.floor(Math.random() * 20) + 50,
-        category: plant.category
+        category: plant.category,
+        scientificName: plant.scientificName
       }));
 
     setTimeout(() => {
+      const result = {
+        ...identifiedPlant,
+        confidence: randomConfidence
+      };
+
       res.json({
         success: true,
-        result: {
-          ...identifiedPlant,
-          confidence: randomConfidence
-        },
+        result,
         alternatives,
+        careCards: [
+          { key: 'watering', title: '浇水', content: result.careGuide.watering, icon: 'droplet' },
+          { key: 'lighting', title: '光照', content: result.careGuide.lighting, icon: 'sun' },
+          { key: 'fertilizing', title: '施肥', content: result.careGuide.fertilizing, icon: 'flower' },
+          { key: 'pruning', title: '修剪', content: result.careGuide.pruning, icon: 'scissor' },
+          { key: 'repotting', title: '换盆', content: result.careGuide.repotting, icon: 'container' },
+          { key: 'propagation', title: '繁殖', content: result.careGuide.propagation, icon: 'branch' },
+          { key: 'pests', title: '病虫害', content: result.careGuide.pests, icon: 'bug' }
+        ],
         tips: [
           '建议将植物放置在通风良好的位置',
           '新购植物建议先隔离观察一周',
