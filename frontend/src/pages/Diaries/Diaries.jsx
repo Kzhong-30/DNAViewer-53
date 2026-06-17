@@ -41,6 +41,15 @@ const growthStatusColor = {
   '发芽': 'cyan', '生长': 'blue', '开花': 'magenta', '结果': 'orange', '休眠': 'default'
 };
 
+const growthStatusOptions = [
+  { value: 'all', label: '全部状态' },
+  { value: '发芽', label: '发芽' },
+  { value: '生长', label: '生长' },
+  { value: '开花', label: '开花' },
+  { value: '结果', label: '结果' },
+  { value: '休眠', label: '休眠' }
+];
+
 const activityConfig = {
   watering: { icon: <DropletOutlined />, text: '浇水', color: 'blue' },
   fertilizing: { icon: <ExperimentOutlined />, text: '施肥', color: 'purple' },
@@ -56,6 +65,7 @@ const Diaries = () => {
   const [plants, setPlants] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [plantFilter, setPlantFilter] = useState(searchParams.get('plantId') || 'all');
+  const [growthStatusFilter, setGrowthStatusFilter] = useState('all');
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
@@ -72,6 +82,7 @@ const Diaries = () => {
     try {
       const params = {};
       if (plantFilter && plantFilter !== 'all') params.plantId = plantFilter;
+      if (growthStatusFilter && growthStatusFilter !== 'all') params.growthStatus = growthStatusFilter;
       const res = await get('/diaries', params);
       const data = res?.data || res?.diaries || res || [];
       setDiaries(Array.isArray(data) ? data : []);
@@ -82,13 +93,14 @@ const Diaries = () => {
   };
 
   useEffect(() => { fetchPlants(); }, []);
-  useEffect(() => { fetchDiaries(); }, [plantFilter]);
+  useEffect(() => { fetchDiaries(); }, [plantFilter, growthStatusFilter]);
 
   const plantNameMap = {};
   plants.forEach(p => { plantNameMap[p._id] = p.name; });
 
   const filteredDiaries = diaries.filter(d => {
     if (!searchText) return true;
+    if (growthStatusFilter !== 'all' && d.growthStatus !== growthStatusFilter) return false;
     const kw = searchText.toLowerCase();
     return (
       (d.title && d.title.toLowerCase().includes(kw)) ||
@@ -142,7 +154,15 @@ const Diaries = () => {
               options={[{ value: 'all', label: '全部植物' }, ...plants.map(p => ({ value: p._id, label: p.name }))]}
             />
           </Col>
-          <Col xs={24} sm={24} md={8} lg={11}>
+          <Col xs={24} sm={12} md={6} lg={5}>
+            <Select
+              size="large" value={growthStatusFilter}
+              onChange={(v) => { setGrowthStatusFilter(v); setPage(1); }}
+              style={{ width: '100%' }} placeholder="生长状态"
+              options={growthStatusOptions}
+            />
+          </Col>
+          <Col xs={24} sm={24} md={8} lg={6}>
             <div style={{ textAlign: 'right' }}>
               <Button
                 type="primary" size="large" icon={<PlusOutlined />}

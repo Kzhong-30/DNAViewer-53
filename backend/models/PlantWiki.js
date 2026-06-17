@@ -38,7 +38,7 @@ const plantWikiSchema = new mongoose.Schema({
   lightRequirement: {
     type: String,
     required: true,
-    enum: ['弱光', '散射光', '半日照', '全日照']
+    enum: ['强光', '半阴', '散射', '全日照', '半日照']
   },
   waterRequirement: {
     type: String,
@@ -77,7 +77,7 @@ const plantWikiSchema = new mongoose.Schema({
   difficulty: {
     type: String,
     required: true,
-    enum: ['新手友好', '中等难度', '需要经验']
+    enum: ['新手友好', '中等难度', '困难']
   },
   growthSpeed: {
     type: String,

@@ -28,7 +28,7 @@ const plantSchema = new mongoose.Schema({
   lightLevel: {
     type: String,
     required: true,
-    enum: ['弱光', '散射光', '半日照', '全日照']
+    enum: ['强光', '半阴', '散射', '全日照', '半日照']
   },
   waterFrequency: {
     type: Number,

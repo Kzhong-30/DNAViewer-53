@@ -35,18 +35,18 @@ const { Search } = Input;
 const { Option } = Select;
 
 const statusMap = {
-  healthy: { text: '健康', color: 'green' },
-  needAttention: { text: '需关注', color: 'orange' },
-  sick: { text: '生病', color: 'red' },
-  dead: { text: '死亡', color: 'default' }
+  '健康': { text: '健康', color: 'green' },
+  '需关注': { text: '需关注', color: 'orange' },
+  '生病': { text: '生病', color: 'red' },
+  '死亡': { text: '死亡', color: 'default' }
 };
 
 const statusOptions = [
   { value: 'all', label: '全部状态' },
-  { value: 'healthy', label: '健康' },
-  { value: 'needAttention', label: '需关注' },
-  { value: 'sick', label: '生病' },
-  { value: 'dead', label: '死亡' }
+  { value: '健康', label: '健康' },
+  { value: '需关注', label: '需关注' },
+  { value: '生病', label: '生病' },
+  { value: '死亡', label: '死亡' }
 ];
 
 const Plants = () => {

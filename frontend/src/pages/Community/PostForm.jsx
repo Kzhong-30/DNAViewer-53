@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Select, Upload, Card, Typography, Space, Row, Col, message, Tag } from "antd";
 import { ArrowLeftOutlined, PlusOutlined, SendOutlined, EnvironmentOutlined, TagsOutlined } from "@ant-design/icons";
 const categoryOptions = [
-  { value: "成果分享", label: "分享成果" },
-  { value: "病虫害求助", label: "求助诊断" },
+  { value: "成果分享", label: "成果分享" },
+  { value: "病虫害求助", label: "病虫害求助" },
   { value: "种子交换", label: "种子交换" },
   { value: "幼苗交换", label: "幼苗交换" },
   { value: "经验交流", label: "经验交流" }
 ];
-const statusOptions = [{ value: "开放", label: "公开" }, { value: "关闭", label: "草稿" }];
+const statusOptions = [
+  { value: "开放", label: "公开" },
+  { value: "关闭", label: "草稿" }
+];
 const PostForm = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();

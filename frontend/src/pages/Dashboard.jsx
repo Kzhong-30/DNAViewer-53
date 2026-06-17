@@ -35,7 +35,7 @@ import {
   InfoCircleOutlined
 } from '@ant-design/icons';
 import ReactECharts from 'echarts-for-react';
-import axios from 'axios';
+import { get } from '../../utils/api.js';
 import dayjs from 'dayjs';
 
 const { Title, Text, Paragraph } = Typography;
@@ -50,22 +50,21 @@ const Dashboard = () => {
   const fetchAllData = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
       const now = new Date();
       const year = now.getFullYear();
       const month = now.getMonth() + 1;
 
       const [overviewRes, activitiesRes, timelineRes, calendarRes] = await Promise.all([
-        axios.get('/api/stats/overview', { headers: { Authorization: 'Bearer ' + token } }),
-        axios.get('/api/stats/activities', { params: { days: 30 }, headers: { Authorization: 'Bearer ' + token } }),
-        axios.get('/api/stats/timeline', { headers: { Authorization: 'Bearer ' + token } }),
-        axios.get('/api/stats/calendar', { params: { year, month }, headers: { Authorization: 'Bearer ' + token } })
+        get('/stats/overview'),
+        get('/stats/activities', { days: 30 }),
+        get('/stats/timeline'),
+        get('/stats/calendar', { year, month })
       ]);
 
-      setOverview(overviewRes.data.stats || {});
-      setActivities(activitiesRes.data || { summary: {}, dailyActivities: [] });
-      setTimeline(timelineRes.data.timeline || []);
-      setCalendarData(calendarRes.data.calendarData || {});
+      setOverview(overviewRes.stats || {});
+      setActivities(activitiesRes || { summary: {}, dailyActivities: [] });
+      setTimeline(timelineRes.timeline || []);
+      setCalendarData(calendarRes.calendarData || {});
     } catch (error) {
       console.error('获取统计数据失败:', error);
     } finally {

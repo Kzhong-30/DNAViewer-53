@@ -7,7 +7,7 @@ const { Title } = Typography;
 const { Option } = Select;
 const difficultyColors = { "新手友好": "green", "中等难度": "orange", "需要经验": "red", "中等": "orange", "困难": "red" };
 const categoryOptions = ["观叶植物", "多肉植物", "花卉植物", "草本植物", "果树植物", "蔬菜植物", "蕨类植物", "水生植物"];
-const difficultyOptions = ["新手友好", "中等难度", "需要经验"];
+const difficultyOptions = ["新手友好", "中等难度", "困难"];
 const Wiki = () => {
   const navigate = useNavigate();
   const [plants, setPlants] = useState([]);
