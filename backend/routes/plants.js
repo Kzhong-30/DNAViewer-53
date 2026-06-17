@@ -68,11 +68,12 @@ const generateReminders = async (plant) => {
 
 router.get('/', auth, async (req, res) => {
   try {
-    const { status, location, search } = req.query;
+    const { status, location, lightLevel, search } = req.query;
     const filter = { userId: req.userId };
 
     if (status) filter.status = status;
     if (location) filter.location = location;
+    if (lightLevel) filter.lightLevel = lightLevel;
     if (search) {
       filter.$or = [
         { name: { $regex: search, $options: 'i' } },
