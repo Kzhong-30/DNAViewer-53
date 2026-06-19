@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Typography, Row, Col, Image, Tag, Descriptions, Tabs, Collapse, Breadcrumb, Button, Empty, Skeleton, Space } from "antd";
-import { HomeOutlined, ArrowLeftOutlined, CheckCircleOutlined, CloudOutlined, SunOutlined, ThunderboltOutlined, FallOutlined, RiseOutlined, HeartOutlined, BugOutlined, ScissorOutlined, FlowerOutlined, EnvironmentOutlined, CalendarOutlined, CoffeeOutlined, FireOutlined } from "@ant-design/icons";
+import { HomeOutlined, ArrowLeftOutlined, CheckCircleOutlined, CloudOutlined, SunOutlined, ThunderboltOutlined, FallOutlined, RiseOutlined, HeartOutlined, BugOutlined, ScissorOutlined, AppleOutlined, EnvironmentOutlined, CalendarOutlined, CoffeeOutlined, FireOutlined } from "@ant-design/icons";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { get } from "../../utils/api.js";
 const { Title, Text, Paragraph } = Typography;
@@ -10,14 +10,14 @@ const difficultyColors = { "新手友好": "green", "中等难度": "orange", "�
 const careGuideIcons = [
   { key: "浇水", icon: <CloudOutlined />, color: "#1890ff", bg: "#e6f7ff", border: "#91d5ff" },
   { key: "光照", icon: <SunOutlined />, color: "#fa8c16", bg: "#fff7e6", border: "#ffd591" },
-  { key: "施肥", icon: <FlowerOutlined />, color: "#52c41a", bg: "#f6ffed", border: "#b7eb8f" },
+  { key: "施肥", icon: <AppleOutlined />, color: "#52c41a", bg: "#f6ffed", border: "#b7eb8f" },
   { key: "修剪", icon: <ScissorOutlined />, color: "#722ed1", bg: "#f9f0ff", border: "#d3adf7" },
   { key: "换盆", icon: <RiseOutlined />, color: "#13c2c2", bg: "#e6fffb", border: "#87e8de" },
   { key: "繁殖", icon: <HeartOutlined />, color: "#eb2f96", bg: "#fff0f6", border: "#ffadd2" },
   { key: "病虫害", icon: <BugOutlined />, color: "#f5222d", bg: "#fff1f0", border: "#ffa39e" }
 ];
 const seasonalConfig = [
-  { key: "spring", label: "春季", icon: <FlowerOutlined />, bg: "#f6ffed", border: "#b7eb8f", title: "春季养护" },
+  { key: "spring", label: "春季", icon: <AppleOutlined />, bg: "#f6ffed", border: "#b7eb8f", title: "春季养护" },
   { key: "summer", label: "夏季", icon: <SunOutlined />, bg: "#fff7e6", border: "#ffd591", title: "夏季养护" },
   { key: "autumn", label: "秋季", icon: <CoffeeOutlined />, bg: "#fff2e8", border: "#ffbb96", title: "秋季养护" },
   { key: "winter", label: "冬季", icon: <CloudOutlined />, bg: "#e6f7ff", border: "#91d5ff", title: "冬季养护" }
@@ -122,7 +122,7 @@ const WikiDetail = () => {
                 <Descriptions.Item label={<span><CloudOutlined style={{ color: "#1890ff" }} /> 浇水频率</span>}>{plant.waterFreq || "夏季2-3天/次，冬季1周/次"}</Descriptions.Item>
                 <Descriptions.Item label={<span><EnvironmentOutlined style={{ color: "#52c41a" }} /> 温度范围</span>}>{plant.tempRange || "15°C ~ 28°C"}</Descriptions.Item>
                 <Descriptions.Item label={<span><ThunderboltOutlined style={{ color: "#722ed1" }} /> 空气湿度</span>}>{plant.humidity || "50% ~ 70%"}</Descriptions.Item>
-                <Descriptions.Item label={<span><FlowerOutlined style={{ color: "#eb2f96" }} /> 土壤要求</span>}>{plant.soil || "疏松透气、排水良好的微酸性土壤"}</Descriptions.Item>
+                <Descriptions.Item label={<span><AppleOutlined style={{ color: "#eb2f96" }} /> 土壤要求</span>}>{plant.soil || "疏松透气、排水良好的微酸性土壤"}</Descriptions.Item>
               </Descriptions>
             </Col>
           </Row>

@@ -3,7 +3,7 @@ import { Layout, Menu, Avatar, Dropdown, message, Typography, Space } from 'antd
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import {
   DashboardOutlined,
-  FlowerOutlined,
+  AppleOutlined,
   FormOutlined,
   BellOutlined,
   CameraOutlined,
@@ -39,7 +39,7 @@ const MainLayout = () => {
 
   const menuItems = [
     { key: '/dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
-    { key: '/plants', icon: <FlowerOutlined />, label: '植物档案' },
+    { key: '/plants', icon: <AppleOutlined />, label: '植物档案' },
     { key: '/diaries', icon: <FormOutlined />, label: '种植日记' },
     { key: '/reminders', icon: <BellOutlined />, label: '养护提醒' },
     { key: '/recognition', icon: <CameraOutlined />, label: '植物识别' },
@@ -101,7 +101,7 @@ const MainLayout = () => {
             borderBottom: '1px solid #f0f0f0'
           }}
         >
-          <FlowerOutlined style={{ fontSize: 24, color: '#52c41a' }} />
+          <AppleOutlined style={{ fontSize: 24, color: '#52c41a' }} />
           {!collapsed && (
             <Text strong style={{ fontSize: 18, marginLeft: 12, color: '#52c41a' }}>
               园艺助手

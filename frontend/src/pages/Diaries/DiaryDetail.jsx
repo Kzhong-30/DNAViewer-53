@@ -5,8 +5,8 @@ import {
 } from 'antd';
 import {
   EditOutlined, DeleteOutlined, ArrowLeftOutlined, HomeOutlined,
-  CalendarOutlined, DropletOutlined, ExperimentOutlined, ScissorOutlined,
-  ThunderboltOutlined, CloudOutlined, ThermometerOutlined
+  CalendarOutlined, CloudOutlined, ExperimentOutlined, ScissorOutlined,
+  ThunderboltOutlined, DashboardOutlined
 } from '@ant-design/icons';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { get, del } from '../../utils/api.js';
@@ -101,12 +101,12 @@ const DiaryDetail = () => {
                   <Space wrap>
                     {diary.weather && <Tag icon={<CloudOutlined />} color="geekblue">{diary.weather}</Tag>}
                     {diary.temperature !== undefined && diary.temperature !== null && (
-                      <Tag icon={<ThermometerOutlined />} color="orange">{diary.temperature}°C</Tag>
+                      <Tag icon={<DashboardOutlined />} color="orange">{diary.temperature}°C</Tag>
                     )}
                   </Space>
                 )}
                 <Space size={4} wrap>
-                  {diary.watering && <Tag icon={<DropletOutlined />} color="blue">浇水</Tag>}
+                  {diary.watering && <Tag icon={<CloudOutlined />} color="blue">浇水</Tag>}
                   {diary.fertilizing && <Tag icon={<ExperimentOutlined />} color="purple">施肥</Tag>}
                   {diary.pruning && <Tag icon={<ScissorOutlined />} color="green">修剪</Tag>}
                   {diary.repotting && <Tag icon={<ThunderboltOutlined />} color="magenta">换盆</Tag>}
@@ -136,7 +136,7 @@ const DiaryDetail = () => {
                 <Divider />
                 <Title level={5} style={{ marginBottom: 16 }}>养护活动详情</Title>
                 <Descriptions bordered size="middle" column={2} style={{ marginBottom: 24 }}>
-                  {diary.watering && <Descriptions.Item label={<Space><DropletOutlined />浇水</Space>}>已完成</Descriptions.Item>}
+                  {diary.watering && <Descriptions.Item label={<Space><CloudOutlined />浇水</Space>}>已完成</Descriptions.Item>}
                   {diary.fertilizing && <Descriptions.Item label={<Space><ExperimentOutlined />施肥</Space>}>已完成</Descriptions.Item>}
                   {diary.pruning && <Descriptions.Item label={<Space><ScissorOutlined />修剪</Space>}>已完成</Descriptions.Item>}
                   {diary.repotting && <Descriptions.Item label={<Space><ThunderboltOutlined />换盆</Space>}>已完成</Descriptions.Item>}
@@ -164,7 +164,7 @@ const DiaryDetail = () => {
                 {diary.temperature !== undefined && diary.temperature !== null && (
                   <Col xs={12} sm={6}>
                     <Card style={{ borderRadius: 8, textAlign: 'center' }} bodyStyle={{ padding: 16 }}>
-                      <ThermometerOutlined style={{ fontSize: 28, color: '#fa8c16', marginBottom: 8 }} />
+                      <DashboardOutlined style={{ fontSize: 28, color: '#fa8c16', marginBottom: 8 }} />
                       <div><Text type="secondary">温度</Text></div>
                       <div style={{ fontSize: 18, fontWeight: 600 }}>{diary.temperature}°C</div>
                     </Card>

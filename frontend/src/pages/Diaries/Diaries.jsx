@@ -24,8 +24,8 @@ import {
   EyeOutlined,
   SearchOutlined,
   CalendarOutlined,
-  FlowerOutlined,
-  DropletOutlined,
+  AppleOutlined,
+  CloudOutlined,
   ExperimentOutlined,
   ScissorOutlined,
   ThunderboltOutlined
@@ -51,7 +51,7 @@ const growthStatusOptions = [
 ];
 
 const activityConfig = {
-  watering: { icon: <DropletOutlined />, text: '浇水', color: 'blue' },
+  watering: { icon: <CloudOutlined />, text: '浇水', color: 'blue' },
   fertilizing: { icon: <ExperimentOutlined />, text: '施肥', color: 'purple' },
   pruning: { icon: <ScissorOutlined />, text: '修剪', color: 'green' },
   repotting: { icon: <ThunderboltOutlined />, text: '换盆', color: 'magenta' }
@@ -209,7 +209,7 @@ const Diaries = () => {
                         </Col>
                       </Row>
                       <Space wrap style={{ marginBottom: 8 }}>
-                        <Space size={4}><FlowerOutlined style={{ color: '#52c41a' }} /><Text type="secondary">{plantNameMap[item.plantId] || '未知植物'}</Text></Space>
+                        <Space size={4}><AppleOutlined style={{ color: '#52c41a' }} /><Text type="secondary">{plantNameMap[item.plantId] || '未知植物'}</Text></Space>
                         <Space size={4}><CalendarOutlined style={{ color: '#1890ff' }} /><Text type="secondary">{item.createdAt ? dayjs(item.createdAt).format('YYYY-MM-DD') : '-'}</Text></Space>
                         <Space size={4} wrap>
                           {item.watering && <Tag icon={activityConfig.watering.icon} color={activityConfig.watering.color} style={{ margin: 0 }}>{activityConfig.watering.text}</Tag>}

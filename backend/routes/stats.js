@@ -6,17 +6,6 @@ const Reminder = require("../models/Reminder");
 const Post = require("../models/Post");
 const auth = require("../middleware/auth");
 
-const healthyCode = [20581, 24247];
-const needCode = [38656, 20851, 27880];
-const sickCode = [29983, 30149];
-const pendingCode = [24453, 22788, 29702];
-const doneCode = [24050, 23436, 25104];
-
-function matchCode(str, codes) {
-  if (!str) return false;
-  return str.length >= 2 && codes[0] === str.charCodeAt(0) && codes[1] === str.charCodeAt(1);
-}
-
 function formatDate(date) {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, "0");
@@ -33,9 +22,9 @@ router.get("/overview", auth, async function (req, res) {
     const speciesMap = {}, lightMap = {}, locMap = {};
     for (let i = 0; i < plants.length; i++) {
       const p = plants[i];
-      if (matchCode(p.status, healthyCode)) healthy++;
-      else if (matchCode(p.status, needCode)) need++;
-      else if (matchCode(p.status, sickCode)) sick++;
+      if (p.status === '健康') healthy++;
+      else if (p.status === '需关注') need++;
+      else if (p.status === '生病') sick++;
       if (p.species) speciesMap[p.species] = (speciesMap[p.species] || 0) + 1;
       if (p.lightLevel) lightMap[p.lightLevel] = (lightMap[p.lightLevel] || 0) + 1;
       if (p.location) locMap[p.location] = (locMap[p.location] || 0) + 1;
@@ -57,8 +46,8 @@ router.get("/overview", auth, async function (req, res) {
     let pending = 0, completed = 0;
     for (let i = 0; i < reminders.length; i++) {
       const r = reminders[i];
-      if (matchCode(r.status, pendingCode)) pending++;
-      else if (matchCode(r.status, doneCode)) completed++;
+      if (r.status === '待处理') pending++;
+      else if (r.status === '已完成') completed++;
     }
     const myPosts = await Post.countDocuments({ userId: uid });
     res.json({

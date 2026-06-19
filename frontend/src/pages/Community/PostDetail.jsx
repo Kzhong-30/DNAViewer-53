@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Typography, Avatar, Tag, Button, Space, Row, Col, Image, Breadcrumb, Form, Input, List, Comment, Popconfirm, message, Empty, Skeleton } from "antd";
+import { Card, Typography, Avatar, Tag, Button, Space, Row, Col, Image, Breadcrumb, Form, Input, List, Popconfirm, message, Empty, Skeleton } from "antd";
 import { HomeOutlined, LikeOutlined, LikeFilled, ShareAltOutlined, EditOutlined, DeleteOutlined, EnvironmentOutlined, TagsOutlined, SendOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import dayjs from "dayjs";
@@ -144,12 +144,11 @@ const PostDetail = () => {
                 renderItem={(comment) => {
                   const isOwnComment = currentUserId && (comment.author?._id === currentUserId || isOwnPost);
                   return (
-                    <Comment
-                      key={comment._id}
-                      author={<Text strong>{comment.author?.username || "匿名用户"}</Text>}
-                      avatar={<Avatar src={comment.author?.avatar} style={{ backgroundColor: "#52c41a" }}>{comment.author?.username?.[0]?.toUpperCase() || "U"}</Avatar>}
-                      content={
-                        <div>
+                    <List.Item key={comment._id} style={{ padding: "12px 0", borderBottom: "1px solid #f0f0f0" }}>
+                      <div style={{ display: "flex", gap: 12, width: "100%" }}>
+                        <Avatar src={comment.author?.avatar} style={{ backgroundColor: "#52c41a" }}>{comment.author?.username?.[0]?.toUpperCase() || "U"}</Avatar>
+                        <div style={{ flex: 1 }}>
+                          <Text strong>{comment.author?.username || "匿名用户"}</Text>
                           <Paragraph style={{ marginBottom: 8 }}>{comment.content}</Paragraph>
                           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                             <Text type="secondary" style={{ fontSize: 12 }}>{dayjs(comment.createdAt).format("YYYY-MM-DD HH:mm")} · {dayjs(comment.createdAt).fromNow()}</Text>
@@ -160,8 +159,8 @@ const PostDetail = () => {
                             )}
                           </div>
                         </div>
-                      }
-                    />
+                      </div>
+                    </List.Item>
                   );
                 }}
               />
@@ -169,9 +168,9 @@ const PostDetail = () => {
               <Empty description="暂无评论，快来抢沙发吧！" style={{ padding: "40px 0" }} />
             )}
             <div style={{ marginTop: 24, paddingTop: 24, borderTop: "1px solid #f0f0f0" }}>
-              <Comment
-                avatar={<Avatar src={currentUser?.avatar} style={{ backgroundColor: "#722ed1" }}>{currentUser?.username?.[0]?.toUpperCase() || "U"}</Avatar>}
-                content={
+              <div style={{ display: "flex", gap: 12 }}>
+                <Avatar src={currentUser?.avatar} style={{ backgroundColor: "#722ed1" }}>{currentUser?.username?.[0]?.toUpperCase() || "U"}</Avatar>
+                <div style={{ flex: 1 }}>
                   <Form form={form} onFinish={handleSubmitComment} layout="vertical">
                     <Form.Item name="content" rules={[{ required: true, message: "请输入评论内容" }]} style={{ marginBottom: 12 }}>
                       <TextArea rows={4} placeholder="写下你的评论..." maxLength={1000} showCount />
@@ -180,8 +179,8 @@ const PostDetail = () => {
                       <Button htmlType="submit" type="primary" icon={<SendOutlined />} loading={submittingComment}>发表评论</Button>
                     </Form.Item>
                   </Form>
-                }
-              />
+                </div>
+              </div>
             </div>
           </Card>
         </Col>

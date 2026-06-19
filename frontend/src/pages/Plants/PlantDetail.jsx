@@ -30,7 +30,7 @@ import {
   EnvironmentOutlined,
   CalendarOutlined,
   SunOutlined,
-  DropletOutlined,
+  CloudOutlined,
   ExperimentOutlined,
   ScissorOutlined,
   ThunderboltOutlined,
@@ -108,7 +108,7 @@ const PlantDetail = () => {
 
   const getReminderIcon = (type) => {
     const icons = {
-      '浇水': <DropletOutlined />,
+      '浇水': <CloudOutlined />,
       '施肥': <ExperimentOutlined />,
       '修剪': <ScissorOutlined />,
       '换盆': <ThunderboltOutlined />
@@ -186,7 +186,7 @@ const PlantDetail = () => {
                   </Descriptions.Item>
                   <Descriptions.Item label="放置位置">{plant.location || '-'}</Descriptions.Item>
                   <Descriptions.Item label="光照等级"><Space><SunOutlined />{plant.lightLevel || '-'}</Space></Descriptions.Item>
-                  <Descriptions.Item label="浇水频率"><Space><DropletOutlined />{plant.waterFrequency ? plant.waterFrequency + ' 天' : '-'}</Space></Descriptions.Item>
+                  <Descriptions.Item label="浇水频率"><Space><CloudOutlined />{plant.waterFrequency ? plant.waterFrequency + ' 天' : '-'}</Space></Descriptions.Item>
                   <Descriptions.Item label="施肥频率"><Space><ExperimentOutlined />{plant.fertilizeFrequency ? plant.fertilizeFrequency + ' 天' : '-'}</Space></Descriptions.Item>
                   <Descriptions.Item label="修剪频率"><Space><ScissorOutlined />{plant.pruneFrequency ? plant.pruneFrequency + ' 天' : '-'}</Space></Descriptions.Item>
                   <Descriptions.Item label="换盆频率"><Space><ThunderboltOutlined />{plant.repotFrequency ? plant.repotFrequency + ' 天' : '-'}</Space></Descriptions.Item>
@@ -242,7 +242,7 @@ const PlantDetail = () => {
                                 <Text type="secondary"><CalendarOutlined style={{ marginRight: 4 }} />{item.createdAt ? dayjs(item.createdAt).format('YYYY-MM-DD') : '-'}</Text>
                               </Space>
                               <Space wrap>
-                                {item.watering && <Tag icon={<DropletOutlined />} color="blue">浇水</Tag>}
+                                {item.watering && <Tag icon={<CloudOutlined />} color="blue">浇水</Tag>}
                                 {item.fertilizing && <Tag icon={<ExperimentOutlined />} color="purple">施肥</Tag>}
                                 {item.pruning && <Tag icon={<ScissorOutlined />} color="green">修剪</Tag>}
                                 {item.repotting && <Tag icon={<ThunderboltOutlined />} color="magenta">换盆</Tag>}

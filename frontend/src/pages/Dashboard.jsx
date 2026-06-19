@@ -23,7 +23,7 @@ import {
   FileTextOutlined,
   BellOutlined,
   SunOutlined,
-  DropletOutlined,
+  CloudOutlined,
   ExperimentOutlined,
   ScissorOutlined,
   ThunderboltOutlined,
@@ -35,7 +35,7 @@ import {
   InfoCircleOutlined
 } from '@ant-design/icons';
 import ReactECharts from 'echarts-for-react';
-import { get } from '../../utils/api.js';
+import { get } from '../utils/api.js';
 import dayjs from 'dayjs';
 
 const { Title, Text, Paragraph } = Typography;
@@ -206,7 +206,7 @@ const Dashboard = () => {
   };
 
   const getTimelineDot = (item) => {
-    const dotIcons = { watering: <DropletOutlined />, fertilizing: <ExperimentOutlined />, pruning: <ScissorOutlined />, repotting: <ThunderboltOutlined /> };
+    const dotIcons = { watering: <CloudOutlined />, fertilizing: <ExperimentOutlined />, pruning: <ScissorOutlined />, repotting: <ThunderboltOutlined /> };
     if (item.activities && item.activities.length > 0) {
       return dotIcons[item.activities[0]] || <CheckCircleOutlined />;
     }
@@ -215,7 +215,7 @@ const Dashboard = () => {
 
   const getActivityConfig = (act) => {
     const actMap = {
-      watering: { icon: <DropletOutlined />, text: '浇水', color: '#1890ff' },
+      watering: { icon: <CloudOutlined />, text: '浇水', color: '#1890ff' },
       fertilizing: { icon: <ExperimentOutlined />, text: '施肥', color: '#722ed1' },
       pruning: { icon: <ScissorOutlined />, text: '修剪', color: '#52c41a' },
       repotting: { icon: <ThunderboltOutlined />, text: '换盆', color: '#eb2f96' }
@@ -264,7 +264,7 @@ const Dashboard = () => {
             </Card>
           </Col>
           <Col xs={24} lg={16}>
-            <Card title={<Space><CalendarOutlined style={{ color: '#1890ff' }} /><span>近30天养护活动</span>{activities.summary && <Space style={{ marginLeft: 16 }}><Tag icon={<DropletOutlined />} color="blue">浇水 {activities.summary.watering || 0}</Tag><Tag icon={<ExperimentOutlined />} color="purple">施肥 {activities.summary.fertilizing || 0}</Tag><Tag icon={<ScissorOutlined />} color="green">修剪 {activities.summary.pruning || 0}</Tag><Tag icon={<ThunderboltOutlined />} color="magenta">换盆 {activities.summary.repotting || 0}</Tag></Space>}</Space>} style={{ borderRadius: 16, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.08)', height: '100%' }}>
+            <Card title={<Space><CalendarOutlined style={{ color: '#1890ff' }} /><span>近30天养护活动</span>{activities.summary && <Space style={{ marginLeft: 16 }}><Tag icon={<CloudOutlined />} color="blue">浇水 {activities.summary.watering || 0}</Tag><Tag icon={<ExperimentOutlined />} color="purple">施肥 {activities.summary.fertilizing || 0}</Tag><Tag icon={<ScissorOutlined />} color="green">修剪 {activities.summary.pruning || 0}</Tag><Tag icon={<ThunderboltOutlined />} color="magenta">换盆 {activities.summary.repotting || 0}</Tag></Space>}</Space>} style={{ borderRadius: 16, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.08)', height: '100%' }}>
               <ReactECharts option={getActivitiesLineOption()} style={{ height: 320 }} opts={{ renderer: 'svg' }} />
             </Card>
           </Col>

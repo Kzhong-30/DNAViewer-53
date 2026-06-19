@@ -18,20 +18,18 @@ import {
 } from 'antd';
 import {
   InboxOutlined,
-  DropletOutlined,
+  CloudOutlined,
   SunOutlined,
   ExperimentOutlined,
   ScissorOutlined,
   ThunderboltOutlined,
-  BranchOutlined,
+  ApartmentOutlined,
   BugOutlined,
   EnvironmentOutlined,
   CalendarOutlined,
   BulbOutlined,
-  SpringOutlined,
-  SummerOutlined,
+  FireOutlined,
   FallOutlined,
-  WinterOutlined
 } from '@ant-design/icons';
 import { post } from '../utils/api.js';
 
@@ -51,20 +49,20 @@ const careCardColors = {
 };
 
 const careCardIcons = {
-  watering: <DropletOutlined />,
+  watering: <CloudOutlined />,
   lighting: <SunOutlined />,
   fertilizing: <ExperimentOutlined />,
   pruning: <ScissorOutlined />,
   repotting: <ThunderboltOutlined />,
-  propagation: <BranchOutlined />,
+  propagation: <ApartmentOutlined />,
   pests: <BugOutlined />
 };
 
 const seasonalConfig = {
-  spring: { icon: <SpringOutlined />, title: '春季养护', bg: '#f0fff4', border: '#95de64', color: '#389e0d' },
-  summer: { icon: <SummerOutlined />, title: '夏季养护', bg: '#fffbe6', border: '#ffd666', color: '#d48806' },
+  spring: { icon: <CalendarOutlined />, title: '春季养护', bg: '#f0fff4', border: '#95de64', color: '#389e0d' },
+  summer: { icon: <FireOutlined />, title: '夏季养护', bg: '#fffbe6', border: '#ffd666', color: '#d48806' },
   autumn: { icon: <FallOutlined />, title: '秋季养护', bg: '#fff2e8', border: '#ff9c6e', color: '#d4380d' },
-  winter: { icon: <WinterOutlined />, title: '冬季养护', bg: '#e6f4ff', border: '#69c0ff', color: '#0958d9' }
+  winter: { icon: <CloudOutlined />, title: '冬季养护', bg: '#e6f4ff', border: '#69c0ff', color: '#0958d9' }
 };
 
 const Recognition = () => {
@@ -244,7 +242,7 @@ const Recognition = () => {
                   <Descriptions.Item label="分类"><Tag color="blue">{result.category || '-'}</Tag></Descriptions.Item>
                   <Descriptions.Item label="养护难度"><Tag color={getDifficultyColor(result.difficulty)}>{result.difficulty || '-'}</Tag></Descriptions.Item>
                   <Descriptions.Item label="光照需求"><Space><SunOutlined style={{ color: '#faad14' }} />{result.lightRequirement || '-'}</Space></Descriptions.Item>
-                  <Descriptions.Item label="浇水频率"><Space><DropletOutlined style={{ color: '#1890ff' }} />{result.waterFrequency ? '每 ' + result.waterFrequency + ' 天' : '-'}</Space></Descriptions.Item>
+                  <Descriptions.Item label="浇水频率"><Space><CloudOutlined style={{ color: '#1890ff' }} />{result.waterFrequency ? '每 ' + result.waterFrequency + ' 天' : '-'}</Space></Descriptions.Item>
                   <Descriptions.Item label="毒性">{result.toxicity || '-'}</Descriptions.Item>
                   {result.commonNames && result.commonNames.length > 0 && (
                     <Descriptions.Item label="别名" span={screens.xs ? 1 : 2}>

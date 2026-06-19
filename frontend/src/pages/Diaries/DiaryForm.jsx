@@ -31,7 +31,7 @@ import {
   ExperimentOutlined,
   ScissorOutlined,
   ThunderboltOutlined,
-  DropletOutlined
+  CloudOutlined
 } from '@ant-design/icons';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { get, post, put } from '../../utils/api.js';
